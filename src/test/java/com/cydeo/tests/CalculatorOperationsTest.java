@@ -6,7 +6,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -80,6 +79,43 @@ public class CalculatorOperationsTest {
 
 
     }
+
+
+    /**
+     * 15 / 5 = 3
+     */
+
+    @Test
+    public void divideTest()throws InterruptedException{
+
+        MobileElement num1 = driver.findElement(MobileBy.id("com.google.android.calculator:id/digit_1"));
+        MobileElement num5 = driver.findElement(MobileBy.id("com.google.android.calculator:id/digit_5"));
+        MobileElement equalSign = driver.findElement(MobileBy.AccessibilityId("equals"));
+        MobileElement divideSign = driver.findElement(MobileBy.AccessibilityId("divide"));
+        MobileElement resultPreview = driver.findElement(MobileBy.id("com.google.android.calculator:id/result_preview"));
+
+        num1.click();
+        num5.click();
+        divideSign.click();
+        num5.click();
+
+        String preview = resultPreview.getText();
+        assertEquals("3", preview);
+
+        equalSign.click();
+
+        //make sure this element is being located after you click the equalSign
+        MobileElement resultScreen = driver.findElement(MobileBy.id("com.google.android.calculator:id/result_final"));
+        String answer = resultScreen.getText();
+        System.out.println("answer = " + answer);
+
+        Thread.sleep(5000);
+
+        assertEquals("3", answer);
+
+
+    }
+
 
     @AfterEach
     public void cleanUp() throws InterruptedException {
